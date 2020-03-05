@@ -77,6 +77,11 @@ _italic text_
 #### ورودی:
 ```html
 <html lang="en">
+<head>
+    <title>
+        My Page        
+    </title>
+</head>
 <body dir="ltr">
 <p>This is a paragraph</p>
 <div>This is a div</div>
@@ -91,6 +96,9 @@ YES
 #### ورودی:
 ```html
 <html>
+<head>
+    <meta charset="utf-8"/>
+</head>
 <body>
 
 <h1>My First Heading</h1>
