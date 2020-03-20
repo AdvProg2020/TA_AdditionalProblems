@@ -55,7 +55,7 @@ add [countable|uncountable] good [good name]
 </div>
 
 ```
-add uncountable good suger
+add uncountable good sugar
 ```
 
 <div dir="rtl">
@@ -63,7 +63,7 @@ add uncountable good suger
 </div>
 
 ```
-enter count:
+Enter count:
 ```
 
 <div dir="rtl">
@@ -71,7 +71,7 @@ enter count:
 </div>
 
 ```
-enter amount:
+Enter amount:
 ```
 <div dir="rtl">
 
@@ -82,7 +82,7 @@ enter amount:
 </div>
 
 ```
-enter sell and buy price:
+Enter sell and buy price:
 ```
 <div dir="rtl">
  را چاپ کنید.
@@ -140,7 +140,7 @@ new order from [consumer name]
 </div>
 
 ```
-invalid input format. currect format is: "1 item, juice" or "1.2 kg, corn"
+Invalid input format. currect format is: "1 item, juice" or "1.2 kg, corn"
 ```
 
 <div dir="rtl">
@@ -162,7 +162,7 @@ invalid input format. currect format is: "1 item, juice" or "1.2 kg, corn"
 </div>
 
 ```
-item added. total price: [total price]
+Item added. Total price: [total price]
 ```
 
 <div dir="rtl">
@@ -184,8 +184,8 @@ item added. total price: [total price]
 </div>
 
 ```
-only [count] item of [good name] is available.
-only [amount] kg of [good name] is available.
+Only [count] item of [good name] is available.
+Only [amount] kg of [good name] is available.
 ```
 
 <div dir="rtl">
@@ -207,6 +207,82 @@ Do you want to pay with cash or credit?
 
 سپس باید کاربر یکی از عبارات `cash` یا `credit` را وارد کند. اگر پاسخ اشتباه بود، سوال خود را تکرار کنید تا پاسخ درست وارد شود.
 
-پس از وارد شدن پاسخ درست عبارت `Tanks for your order ` را چاپ کنید و کار به پایان می‌رسد.
+پس از وارد شدن پاسخ درست عبارت `Tanks for your order` را چاپ کنید و کار به پایان می‌رسد.
+
+### نمایش لیست کالاها:
+
+مغازه دار می‌خواهد با مراجعه هر مشتری بتواند لیست کالا‌های موجود را به همراه میزان موجودی و قیمت به مشتری نشان دهد. برای این کار او دستور زیر را وارد می‌کند.
+
+<div dir="rtl">
+</div>
+
+```
+goods list
+```
+
+<div dir="rtl">
+
+پس از وارد شدن این دستور باید شما لیست کالاهای موجود را در یک جدول مانند شکل زیر نمایش دهید:
+
+</div>
+
+```
++-----------------+------------+------------+
+| Good name       | Inventory  | Price(IRR) |
++-----------------+------------+------------+
+| milk            | 10 item    | 38000      |
+| rice            | 86 kg      | 210000     |
+| chips           | 15 item    | 30000      |
+| egg             | 18 item    | 12000      |
+| sugar           | 13 kg      | 80000      |
++-----------------+------------+------------+
+```
+<div dir="rtl">
+
+برای فرمت چاپ سطرهای جدول می‌توانید از `System.out.format` و فرمت‌های زیر (برای کالاهای قابل شمارش و غیر قابل شمارش) استفاده کنید:
+
+</div>
+
+```java
+System.out.format("| %-15s | %-7.02f kg | %-10d |%n", name, amount, price);
+System.out.format("| %-15s | %-5d item | %-10d |%n", name, count, price);
+```
+
+<div dir="rtl">
+
+همچنین خطوط اول و آخر دقیقا به صورت زیر باشند:
+
+</div>
+
+
+```
++-----------------+------------+------------+
+```
+
+<div dir="rtl">
+
+</div>
+
+<div dir="rtl">
+
+</div>
+
+<div dir="rtl">
+
+</div>
+
+<div dir="rtl">
+
+</div>
+
+<div dir="rtl">
+
+</div>
+
+<div dir="rtl">
+
+</div>
+
+<div dir="rtl">
 
 </div>
