@@ -39,6 +39,14 @@
 add [countable|uncountable] good [good name]
 ```
 <div dir="rtl">
+مانند:
+</div>
+
+```
+add uncountable good suger
+```
+
+<div dir="rtl">
 سپس شما باید میزان موجودی را بپرسید. اگر کالا از نوع countable بود چاپ کنید:
 </div>
 
