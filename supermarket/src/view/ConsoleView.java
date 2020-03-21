@@ -7,7 +7,7 @@ public class ConsoleView {
 
     public static void start() {
         while(true) {
-            String command = scanner.nextLine();
+            String command = scanner.nextLine().trim();
             if (ConsoleCommand.EXIT.getStringMatcher(command).matches()) {
                 break;
             } else if (ConsoleCommand.ADD_GOOD.getStringMatcher(command).matches()) {
