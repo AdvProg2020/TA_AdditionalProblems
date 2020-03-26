@@ -2,6 +2,7 @@ package view;
 
 import controller.SupermarketController;
 import model.Good;
+import model.Order;
 
 import java.util.Collection;
 import java.util.Scanner;
@@ -25,7 +26,11 @@ public class ConsoleView {
                     addGood(goodName, isCountable);
                 }
             } else if (ConsoleCommand.NEW_ORDER.getStringMatcher(command).matches()) {
-                // TODO: implement
+                Matcher matcher = ConsoleCommand.NEW_ORDER.getStringMatcher(command);
+                if (matcher.find()) {
+                    String consumerName = matcher.group(1);
+                    newOrder(consumerName);
+                }
             } else if (ConsoleCommand.GOODS_LIST.getStringMatcher(command).matches()) {
                 printGoodList();
             } else if (ConsoleCommand.TOTAL_SALES.getStringMatcher(command).matches()) {
@@ -39,6 +44,10 @@ public class ConsoleView {
     }
 
     private static String getInputInFormat(String helpText, String regex) {
+        return getInputInFormatWithError(helpText, regex, "");
+    }
+
+    private static String getInputInFormatWithError(String helpText, String regex, String error) {
         Pattern pattern = Pattern.compile(regex);
         boolean inputIsInvalid;
         String line;
@@ -47,6 +56,8 @@ public class ConsoleView {
             line = scanner.nextLine().trim();
             Matcher matcher = pattern.matcher(line);
             inputIsInvalid = !matcher.find();
+            if (inputIsInvalid)
+                System.out.print(error);
         } while(inputIsInvalid);
         return line;
     }
@@ -91,5 +102,49 @@ public class ConsoleView {
             }
         }
         System.out.println("+-----------------+------------+------------+");
+    }
+
+    private static void newOrder(String consumerName) {
+        Order order = controller.newOrder(consumerName);
+        while (true) {
+            String inputLine = getInputInFormatWithError(
+                    "Enter item:",
+                    "^(?i)((\\d+(.\\d+)?)\\s+(item|kg),\\s+(\\w+)|end\\s+order)$",
+                    "Invalid input format. currect format is: \"1 item, juice\" or \"1.2 kg, corn\"\n"
+            );
+            if (inputLine.equalsIgnoreCase("end order"))
+                break;
+            Matcher matcher = Pattern.compile("^(?i)((\\d+(.\\d+)?)\\s+(item|kg),\\s+(\\w+)|end\\s+order)$").matcher(inputLine);
+            if (matcher.find()) {
+                boolean isCountable = matcher.group(4).equalsIgnoreCase("item");
+                String goodName = inputLine.split("\\s+")[2];
+                if (isCountable) {
+                    int count = Integer.parseInt(matcher.group(2));
+                    Good good = controller.addItemToOrder(order, goodName, count, 0);
+                    if (good == null) {
+                        System.out.format("%s is unavailable\n", goodName);
+                        continue;
+                    }
+                    if (good.getCount() >= count) {
+                        System.out.format("Item added. total price: %d\n", good.getSellPrice() * count);
+                    } else {
+                        System.out.format("Only %d item of %s is available.\n", good.getCount(), good.getName());
+                    }
+                } else {
+                    double amount = Double.parseDouble(matcher.group(2));
+                    Good good = controller.addItemToOrder(order, goodName, 0, amount);
+                    if (good == null) {
+                        System.out.format("%s is unavailable\n", goodName);
+                        continue;
+                    }
+                    if (good.getAmount() >= amount) {
+                        System.out.format("Item added. total price: %d\n", Math.round(good.getSellPrice() * amount));
+                    } else {
+                        System.out.format("Only %f item of %s is available.\n", good.getAmount(), good.getName());
+                    }
+                }
+            }
+        }
+
     }
 }
