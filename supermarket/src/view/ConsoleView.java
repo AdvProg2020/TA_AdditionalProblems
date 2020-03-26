@@ -3,6 +3,7 @@ package view;
 import controller.SupermarketController;
 import model.Good;
 
+import java.util.Collection;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,7 +27,7 @@ public class ConsoleView {
             } else if (ConsoleCommand.NEW_ORDER.getStringMatcher(command).matches()) {
                 // TODO: implement
             } else if (ConsoleCommand.GOODS_LIST.getStringMatcher(command).matches()) {
-                // TODO: implement
+                printGoodList();
             } else if (ConsoleCommand.TOTAL_SALES.getStringMatcher(command).matches()) {
                 // TODO: implement
             } else if (ConsoleCommand.TOTAL_PROFIT.getStringMatcher(command).matches()) {
@@ -75,5 +76,20 @@ public class ConsoleView {
         } else {
             System.out.format("Uncountable good %s added. Total inventory: %f kg\n", goodName, totalAmount);
         }
+    }
+
+    private static void printGoodList() {
+        Collection<Good> goods = controller.getGoods();
+        System.out.print("+-----------------+------------+------------+\n");
+        System.out.print("| Good name       | Inventory  | Price(IRR) |\n");
+        System.out.print("+-----------------+------------+------------+\n");
+        for (Good good : goods) {
+            if (good.isCountable()) {
+                System.out.format("| %-15s | %-5d item | %-10d |%n", good.getName(), good.getCount(), good.getSellPrice());
+            } else {
+                System.out.format("| %-15s | %-7.02f kg | %-10d |%n", good.getName(), good.getAmount(), good.getSellPrice());
+            }
+        }
+        System.out.println("+-----------------+------------+------------+");
     }
 }

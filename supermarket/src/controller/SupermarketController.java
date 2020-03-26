@@ -3,6 +3,9 @@ package controller;
 import model.Good;
 import model.Supermarket;
 
+import java.util.Collection;
+import java.util.List;
+
 public class SupermarketController {
     private static SupermarketController instance = new SupermarketController();
     private Supermarket supermarket;
@@ -28,5 +31,9 @@ public class SupermarketController {
         }
 
         return good;
+    }
+
+    public Collection<Good> getGoods() {
+        return supermarket.getGoods().values();
     }
 }
