@@ -15,7 +15,7 @@ public class Order {
         this.consumerName = consumerName;
         this.orderItems = new ArrayList<>();
         this.date = new Date();
-        this.orderStatus = OrderStatus.created;
+        this.orderStatus = OrderStatus.CREATED;
     }
 
     public void setOrderStatus(OrderStatus orderStatus) {
