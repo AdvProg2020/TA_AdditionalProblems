@@ -6,6 +6,8 @@ import model.OrderItem;
 import model.Supermarket;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class SupermarketController {
     private static SupermarketController instance = new SupermarketController();
@@ -75,6 +77,24 @@ public class SupermarketController {
                 item.getGood().setAmount(item.getGood().getAmount() - item.getAmount());
             }
         }
+    }
+
+    public int getTotalSales(String option) {
+        List<Order> orders = supermarket.getOrders();
+        int totalSales = 0;
+        if (option.equalsIgnoreCase("cash")) {
+            orders = orders.stream()
+                    .filter(order -> order.isCash())
+                    .collect(Collectors.toList());
+        } else if (option.equalsIgnoreCase("credit")) {
+            orders = orders.stream()
+                    .filter(order -> !order.isCash())
+                    .collect(Collectors.toList());
+        }
+        for (Order order : orders) {
+            totalSales += order.getTotalPrice();
+        }
+        return totalSales;
     }
 
     public static class ItemNotEnoughException extends Exception {

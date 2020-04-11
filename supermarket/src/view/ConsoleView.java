@@ -34,7 +34,10 @@ public class ConsoleView {
             } else if (ConsoleCommand.GOODS_LIST.getStringMatcher(command).matches()) {
                 printGoodList();
             } else if (ConsoleCommand.TOTAL_SALES.getStringMatcher(command).matches()) {
-                // TODO: implement
+                Matcher matcher = ConsoleCommand.TOTAL_SALES.getStringMatcher(command);
+                if (matcher.find()) {
+                    String option = matcher.group(2); // option is cash or credit or null
+                }
             } else if (ConsoleCommand.TOTAL_PROFIT.getStringMatcher(command).matches()) {
                 // TODO: implement
             } else {
@@ -151,5 +154,8 @@ public class ConsoleView {
         System.out.println("Tanks for your order");
     }
 
-
+    public void printTotalSales(String option) {
+        int totalSales = controller.getTotalSales(option);
+        System.out.format("%d IRR\n", totalSales);
+    }
 }
