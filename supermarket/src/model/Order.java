@@ -57,4 +57,16 @@ public class Order {
         }
         return totalPrice;
     }
+
+    public int getTotalProfit() {
+        int totalProfit = 0;
+        for (OrderItem item : orderItems) {
+            if (item.getCount() != 0) {
+                totalProfit += item.getCount() * (item.getGood().getSellPrice() - item.getGood().getBuyPrice());
+            } else if (item.getAmount() != 0) {
+                totalProfit += item.getAmount() * (item.getGood().getSellPrice() - item.getGood().getBuyPrice());
+            }
+        }
+        return totalProfit;
+    }
 }

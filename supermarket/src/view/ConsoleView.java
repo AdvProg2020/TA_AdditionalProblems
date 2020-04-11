@@ -37,9 +37,10 @@ public class ConsoleView {
                 Matcher matcher = ConsoleCommand.TOTAL_SALES.getStringMatcher(command);
                 if (matcher.find()) {
                     String option = matcher.group(2); // option is cash or credit or null
+                    printTotalSales(option);
                 }
             } else if (ConsoleCommand.TOTAL_PROFIT.getStringMatcher(command).matches()) {
-                // TODO: implement
+                printTotalProfit();
             } else {
                 System.out.println("Invalid Command.");
             }
@@ -154,8 +155,13 @@ public class ConsoleView {
         System.out.println("Tanks for your order");
     }
 
-    public void printTotalSales(String option) {
+    public static void printTotalSales(String option) {
         int totalSales = controller.getTotalSales(option);
         System.out.format("%d IRR\n", totalSales);
+    }
+
+    private static void printTotalProfit() {
+        int totalProfit = controller.getTotalProfit();
+        System.out.format("%d IRR\n", totalProfit);
     }
 }
