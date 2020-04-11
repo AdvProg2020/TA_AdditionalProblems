@@ -1,13 +1,11 @@
 package controller;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import model.Good;
 import model.Order;
 import model.OrderItem;
 import model.Supermarket;
 
 import java.util.Collection;
-import java.util.List;
 
 public class SupermarketController {
     private static SupermarketController instance = new SupermarketController();
@@ -46,22 +44,44 @@ public class SupermarketController {
         return order;
     }
 
-    public Good addItemToOrder(Order order, String goodName, int count, double amount) {
+    public Good addItemToOrder(Order order, String goodName, int count, double amount) throws ItemNotEnoughException, ItemUnavailableException {
         Good requestedGood = supermarket.getGoods().get(goodName);
         if (requestedGood == null)
-            return null;
+            throw new ItemUnavailableException("Item is not available");
         if (requestedGood.isCountable()) {
             if (count <= requestedGood.getCount()) {
                 OrderItem orderItem = new OrderItem(requestedGood, count, 0);
                 order.getOrderItems().add(orderItem);
+            } else {
+                throw new ItemNotEnoughException("Item not enough.", requestedGood);
             }
-            return requestedGood;
         } else {
             if (amount <= requestedGood.getAmount()) {
                 OrderItem orderItem = new OrderItem(requestedGood, 0, amount);
                 order.getOrderItems().add(orderItem);
+            } else {
+                throw new ItemNotEnoughException("Item not enough.", requestedGood);
             }
-            return requestedGood;
+        }
+        return requestedGood;
+    }
+
+    public static class ItemNotEnoughException extends Exception {
+        Good good;
+
+        public Good getGood() {
+            return good;
+        }
+
+        public ItemNotEnoughException(String message, Good good) {
+            super(message);
+            this.good = good;
+        }
+    }
+
+    public static class ItemUnavailableException extends Exception {
+        public ItemUnavailableException(String message) {
+            super(message);
         }
     }
 }

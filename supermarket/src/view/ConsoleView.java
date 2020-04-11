@@ -10,8 +10,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ConsoleView {
-    private static Scanner scanner = new Scanner(System.in);
-    private static SupermarketController controller = SupermarketController.getInstance();
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final SupermarketController controller = SupermarketController.getInstance();
 
     public static void start() {
         while(true) {
@@ -118,33 +118,32 @@ public class ConsoleView {
             if (matcher.find()) {
                 boolean isCountable = matcher.group(4).equalsIgnoreCase("item");
                 String goodName = inputLine.split("\\s+")[2];
+                Good good;
                 if (isCountable) {
                     int count = Integer.parseInt(matcher.group(2));
-                    Good good = controller.addItemToOrder(order, goodName, count, 0);
-                    if (good == null) {
-                        System.out.format("%s is unavailable\n", goodName);
-                        continue;
-                    }
-                    if (good.getCount() >= count) {
+                    try {
+                        good = controller.addItemToOrder(order, goodName, count, 0);
                         System.out.format("Item added. total price: %d\n", good.getSellPrice() * count);
-                    } else {
-                        System.out.format("Only %d item of %s is available.\n", good.getCount(), good.getName());
+                    } catch (SupermarketController.ItemNotEnoughException e) {
+                        System.out.format("Only %d item of %s is available.\n", e.getGood().getCount(), e.getGood().getName());
+                    } catch (SupermarketController.ItemUnavailableException e) {
+                        System.out.format("%s is unavailable\n", goodName);
                     }
                 } else {
                     double amount = Double.parseDouble(matcher.group(2));
-                    Good good = controller.addItemToOrder(order, goodName, 0, amount);
-                    if (good == null) {
-                        System.out.format("%s is unavailable\n", goodName);
-                        continue;
-                    }
-                    if (good.getAmount() >= amount) {
+                    try {
+                        good = controller.addItemToOrder(order, goodName, 0, amount);
                         System.out.format("Item added. total price: %d\n", Math.round(good.getSellPrice() * amount));
-                    } else {
-                        System.out.format("Only %f item of %s is available.\n", good.getAmount(), good.getName());
+                    } catch (SupermarketController.ItemNotEnoughException e) {
+                        System.out.format("Only %f item of %s is available.\n", e.getGood().getAmount(), e.getGood().getName());
+                    } catch (SupermarketController.ItemUnavailableException e) {
+                        System.out.format("%s is unavailable\n", goodName);
                     }
                 }
             }
         }
 
     }
+
+
 }
