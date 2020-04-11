@@ -66,6 +66,17 @@ public class SupermarketController {
         return requestedGood;
     }
 
+    public void checkoutOrder(Order order, boolean isCash) {
+        order.setCash(isCash);
+        for (OrderItem item : order.getOrderItems()) {
+            if (item.getCount() != 0) {
+                item.getGood().setCount(item.getGood().getCount() - item.getCount());
+            } else if (item.getAmount() != 0) {
+                item.getGood().setAmount(item.getGood().getAmount() - item.getAmount());
+            }
+        }
+    }
+
     public static class ItemNotEnoughException extends Exception {
         Good good;
 

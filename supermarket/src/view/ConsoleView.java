@@ -14,7 +14,7 @@ public class ConsoleView {
     private static final SupermarketController controller = SupermarketController.getInstance();
 
     public static void start() {
-        while(true) {
+        while (true) {
             String command = scanner.nextLine().trim();
             if (ConsoleCommand.EXIT.getStringMatcher(command).matches()) {
                 break;
@@ -58,7 +58,7 @@ public class ConsoleView {
             inputIsInvalid = !matcher.find();
             if (inputIsInvalid)
                 System.out.print(error);
-        } while(inputIsInvalid);
+        } while (inputIsInvalid);
         return line;
     }
 
@@ -106,6 +106,8 @@ public class ConsoleView {
 
     private static void newOrder(String consumerName) {
         Order order = controller.newOrder(consumerName);
+        int totalPrice;
+        boolean isCash;
         while (true) {
             String inputLine = getInputInFormatWithError(
                     "Enter item:",
@@ -142,7 +144,11 @@ public class ConsoleView {
                 }
             }
         }
-
+        totalPrice = order.getTotalPrice();
+        System.out.format("Total price: %d IRR\n", totalPrice);
+        isCash = getInputInFormat("Do you want to pay with cash or credit?", "^(cash|credit)$").equalsIgnoreCase("cash");
+        controller.checkoutOrder(order, isCash);
+        System.out.println("Tanks for your order");
     }
 
 
