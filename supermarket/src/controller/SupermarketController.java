@@ -1,9 +1,6 @@
 package controller;
 
-import model.Good;
-import model.Order;
-import model.OrderItem;
-import model.Supermarket;
+import model.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -78,6 +75,7 @@ public class SupermarketController {
                 item.getGood().setAmount(item.getGood().getAmount() - item.getAmount());
             }
         }
+        order.setOrderStatus(OrderStatus.DONE);
     }
 
     public int getTotalSales(String option) {
