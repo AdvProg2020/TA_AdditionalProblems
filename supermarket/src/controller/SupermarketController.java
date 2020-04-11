@@ -82,13 +82,14 @@ public class SupermarketController {
         List<Order> orders = supermarket.getOrders();
         return orders.stream()
                 .filter(order -> {
+                    if (option == null)
+                        return true;
                     if (option.equalsIgnoreCase("cash")) {
                         return order.isCash();
                     } else if (option.equalsIgnoreCase("credit")) {
                         return !order.isCash();
-                    } else {
-                        return true;
                     }
+                    return true;
                 })
                 .map(order -> order.getTotalPrice())
                 .reduce((sum, totalSales) -> sum + totalSales)
