@@ -92,7 +92,7 @@ public class SupermarketController {
                     return true;
                 })
                 .map(order -> order.getTotalPrice())
-                .reduce((sum, totalSales) -> sum + totalSales)
+                .reduce((a, b) -> a + b)
                 .orElse(0);
     }
 
@@ -100,7 +100,7 @@ public class SupermarketController {
         List<Order> orders = supermarket.getOrders();
         Optional<Integer> sum = orders.stream()
                 .map(order -> order.getTotalProfit())
-                .reduce((totalProfit, profit) -> totalProfit + profit);
+                .reduce((a, b) -> a + b);
         return sum.orElse(0);
     }
 
