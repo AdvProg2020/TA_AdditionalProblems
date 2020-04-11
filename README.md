@@ -8,7 +8,7 @@
 | صورت سوال |مفاهیم بررسی شده|  راه حل(آپارات)           | کد سوال  |
 |---|---|---|---|
 |[اعتبار سنجی HTML](https://github.com/AdvProg2020/TA_AdditionalProblems/tree/master/html_validator)| Regex (Pattern, Matcher), Stack | https://www.aparat.com/v/nCaQA | [HtmlValidator.java](https://github.com/AdvProg2020/TA_AdditionalProblems/blob/master/html_validator/src/HtmlValidator.java) |
-|[سوپرمارکت](https://github.com/AdvProg2020/TA_AdditionalProblems/tree/master/supermarket)| MVC Design Pattern, Object Oriented Design | در حال طراحی | به زودی |
+|[سوپرمارکت](https://github.com/AdvProg2020/TA_AdditionalProblems/tree/master/supermarket)| MVC Design Pattern, Object Oriented Design | [جلسهٔ اول](https://www.aparat.com/v/cEWJQ) جلسهٔ دوم(به زودی) | [src/](https://github.com/AdvProg2020/TA_AdditionalProblems/tree/master/supermarket/src) |
 
 
 </div>
